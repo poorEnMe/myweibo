@@ -1,0 +1,72 @@
+extends ../layout
+
+block content
+    .container
+        form.form-login#loginForm(role="form" action='/login' method='post')
+            h2.text-center 登录
+            input.form-control(type="text" id="username" name="username"
+            required=true autofocus=true placeholder="请输入账号")
+            input.form-control(type="password" id="password" name="userpassword" placeholder="密码" required=true)
+            button.btn.btn-primary.btnlg.btn-block#loginsubmit(type="submit") 登录
+
+    style.
+        .form-login{
+            width: 360px;
+            padding:15px;
+            margin:200px 0px 0px 0px;
+            background-color: #e5e5e5;
+        }
+        input {
+            margin-bottom: 8px;
+        }
+        .messageDanger {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+    //script(src="/javascripts/register.js")
+    script.
+        $("#loginForm").on('submit',function () {
+            let ispass = false
+            let name = $("#username").val();
+            let password = $("#password").val();
+            $.ajax({
+                url: '/login/check',
+                type: 'POST', //GET
+                async: false,    //或false,是否异步
+                data: {
+                    username: name,
+                    userpassword: password
+                },
+                timeout: 5000,    //超时时间
+                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (result, textStatus, jqXHR) {
+                    if (result) {
+                        alert("登录成功");
+                        ispass=true;
+                    } else {
+                        alert("登录失败");
+                        return false;
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log('错误')
+                }
+
+            })
+            return ispass
+
+        });
+
+
+        //            $.post("/login/check", {
+        //                username: name,
+        //                userpassword: password
+        //            }, function (result) {
+        //                if(result){
+        //                    alert("登录成功");
+        //                    return true;
+        //                }else{
+        //                    alert("登录失败");
+        //                    return false;
+        //                }
+        //            });

@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      .col-md-3
+        form.form-signin(role="form" action='/register' method='post')
+          h2.text-center 注册
+          p#message.text-muted 请输入账号和密码
+          input.form-control(type="text" id="username" name="username"
+                            required=true autofocus=true placeholder="请输入账号")
+          input.form-control(type="password" id="password" name="userpassword" placeholder="密码，不得低于8位数" required=true)
+          input.form-control(type="password" id="passwordRepeat" onclick="registerCheck()" placeholder="确认密码" required=true)
+          button.btn.btn-primary.btnlg.btn-block#registerSubmit(type="submit") 注册
+
+    style.
+        .form-signin {
+            width: 360px;
+            padding:15px;
+            margin: 200px 0px 0px 0px;
+            background-color: #e5e5e5;
+        }
+        input {
+            margin-bottom: 8px;
+        }
+        .messageDanger {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+    script(src="/javascripts/register.js")

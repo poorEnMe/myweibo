@@ -1,0 +1,59 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      .col-md-offset-3
+        form.col-md-7.publishForm
+          h4 say something~
+          textarea#publishBody.form-control
+          button#publishEntry.btn-primary.btn.btn-default 发布
+  include ../includes/entries
+    //.container
+  //  .row
+  //    each entry in entries
+  //      .col-md-offset-3
+  //        form.col-md-7.entryForm
+  //            img.user-head(src="/images/userhead.jpg")
+  //            a.user-name(href="/info/#{entry.userId}" style="white-space:nowrap;") #{entry.author}
+  //            div #{entry.body}
+  style.
+    #publishEntry{
+      margin: 3px;
+      float:right;
+    }
+  //  textarea{
+  //    resize:none;
+  //    word-wrap:break-word;
+  //    width: 300px;
+  //  }
+  //
+  //  .publishForm,.entryForm{
+  //    background-color: #e5e5e5;
+  //    margin:10px;
+  //  }
+  //  .user-head{
+  //    width: 60px;
+  //    margin: 10px;
+  //  }
+  //  .user-name {
+  //    font-weight: 700;
+  //    margin: 10px;
+  //    vertical-align: top;
+  //  }
+  //
+  //script.
+  //    $("#publishEntry").on('click', function () {
+  //        let body = $("#publishBody").val();
+  //        console.log(body);
+  //        $.post("/publish", {body: body}, function (data) {
+  //            if (data) {
+  //                alert('success');
+  //                return true
+  //            }else{
+  //                alert('faild');
+  //                return false
+  //            }
+  //        });
+  //    });
+  //
