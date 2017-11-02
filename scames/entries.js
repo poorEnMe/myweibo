@@ -7,12 +7,10 @@ let date = new Date();
 let EntriesSchema = new mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,
-        rel:'users'
+        ref:'users'
     },
-    userId:String,
-    auther:String,
     body:String,
-    createAT:Date,
+    createAt:Date,
     updateAt:Date
 });
 
@@ -27,7 +25,7 @@ EntriesSchema.pre('save',(next)=>{
 
 EntriesSchema.statics ={
 
-    findById:(id,cb)=>{
+    findById:(id)=>{
         return this.findOne({_id:id});
     }
 };

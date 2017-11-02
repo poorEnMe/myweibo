@@ -1,45 +1,79 @@
 .container
     .row
-        each entry in entries
-            .col-md-offset-3
-                form.col-md-7.entryForm
-                    img.user-head(src="/images/userhead.jpg")
-                    a.user-name(href="/info/#{entry.userId}" style="white-space:nowrap;") #{entry.author}
-                    div #{entry.body}
+        .col-md-offset-2
+            - if(entries)
+                each entry in entries
+                    form.col-md-8.entryForm
+                        .pull-left
+                            img.user-head(src="/images/userhead.jpg")
+                        div(style="margin-left:80px")
+                            a.user-name(href="/info/"  style="white-space:nowrap;") #{entry.userId.name}
+                            p #{entry.body}
+                    include ../includes/comment
+                    form.col-md-8.commentlist-form
+                        .pull-left
+                            img.comment-head(src="/images/userhead.jpg")
+                        span.commentlist-body
+                        button#replyComment.btn.btn-xs 回复
 
 style.
-    textarea{
-        resize:none;
-        word-wrap:break-word;
-        width: 300px;
+    p{word-break:break-all;}
+    .entryForm{
+        background-color: ivory;
+        margin-left:10px;
+        margin-top: 20px;
+        padding: 20px 20px 4px;
     }
-
-        .publishForm,.entryForm{
-            background-color: #e5e5e5;
-            margin:10px;
+    .user-head{
+        width: 60px;
+        margin: 0 10px 20px;
     }
-        .user-head{
-            width: 60px;
-        margin: 10px;
-    }
-        .user-name {
-            font-weight: 700;
-    margin: 10px;
+    .user-name {
+        font-weight: 700;
+        margin-bottom: 10px;
         vertical-align: top;
     }
 
+    .commentlist-form {
+        background-color: #d9edf7;
+        margin-left: 10px;
+        padding: 5px 20px 4px 10px;
+        border-color: #9acfea;
+        border-top-width: 1px;
+        border-top-style: solid;
+    }
+    .commentlist-body {
+        margin-left: 10px;
+        width: 500px;
+    }
+    #replyComment{
+        float: right;
+    }
 script.
     $("#publishEntry").on('click', function () {
         let body = $("#publishBody").val();
-        console.log(body);
-        $.post("/publish", {body: body}, function (data) {
-            if (data) {
-                alert('success');
-                return true
-            }else{
-                alert('faild');
-                return false
+        if(body === null){
+            return false
+        }
+        $.ajax({
+            url: '/publish',
+            type: 'POST', //GET
+            async: true,    //或false,是否异步
+            data: {
+                body:body
+            },
+            timeout: 5000,    //超时时间
+            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+            success: function (data) {
+                if (data) {
+                    alert('success');
+                    return true
+                } else {
+                    alert('faild');
+                    return false
+                }
             }
-        });
+        })
+
     });
 

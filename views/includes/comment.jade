@@ -1,0 +1,37 @@
+form.col-md-8.comment-form(action='/publishComment' method="post")
+    .pull-left
+        img.comment-head(src="/images/userhead.jpg")
+    textarea#commentBody.comment-body(name="body")
+    input#entryId(type="hidden" name="entryId" value="#{entry._id}")
+    button.publishComment.btn-primary.btn.btn-xs(id="#{entry._id}") 评论
+
+style.
+    .comment-form {
+        background-color: #d9edf7;
+        margin-left: 10px;
+        padding: 5px 20px 4px 10px;
+        border-color: #9acfea;
+        border-top-width: 1px;
+        border-top-style: solid;
+    }
+
+    .comment-head {
+        width: 30px;
+        margin: 0 10px 0 10px;
+    }
+
+    .comment-body {
+        margin-left: 10px;
+        height: 30px;
+        width: 500px;
+    }
+
+    .publishComment {
+        vertical-align: top;
+        float: right;
+
+        margin-top: 5px;
+    }
+
+//script.
+//

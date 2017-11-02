@@ -1,5 +1,6 @@
 const entries = require('./routes/entries');
 const user = require('./routes/users');
+const comment = require('./routes/commentRoutes');
 
 
 
@@ -25,7 +26,7 @@ module.exports = (app)=>{
     app.get('/logout',user.logout);
 
     app.post('/publish',entries.publishSubmit);
-
+    app.post('/publishComment',comment.publishComment);
 
 
     app.get('/list',(req,res)=>{
