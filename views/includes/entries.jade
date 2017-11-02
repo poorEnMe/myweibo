@@ -3,24 +3,25 @@
         .col-md-offset-2
             - if(entries)
                 each entry in entries
-                    form.col-md-8.entryForm
-                        .pull-left
-                            img.user-head(src="/images/userhead.jpg")
-                        div(style="margin-left:80px")
-                            a.user-name(href="/info/"  style="white-space:nowrap;") #{entry.userId.name}
-                            p #{entry.body}
-                    include ../includes/comment
-                    form.col-md-8.commentlist-form
-                        .pull-left
-                            img.comment-head(src="/images/userhead.jpg")
-                        span.commentlist-body
-                        button#replyComment.btn.btn-xs 回复
+                    div(id="#{entry._id}" style="background-color: ivory;margin-left:10px;")
+                        form.col-md-8.entryForm
+                            .pull-left
+                                img.user-head(src="/images/userhead.jpg")
+                            div(style="margin-left:80px")
+                                a.user-name(href="/info/"  style="white-space:nowrap;") #{entry.userId.name}
+                                p #{entry.body}
+                        ul.nav.nav-pills.col-md-8.entry-tool
+                            li
+                                a(href="javascript:void(0)" entryId="#{entry._id}" onclick="showComment(this)") 评论
+                            li
+                                a 点赞
+                        include ../includes/comment
+
 
 style.
     p{word-break:break-all;}
     .entryForm{
         background-color: ivory;
-        margin-left:10px;
         margin-top: 20px;
         padding: 20px 20px 4px;
     }
@@ -33,47 +34,33 @@ style.
         margin-bottom: 10px;
         vertical-align: top;
     }
+    .entry-tool{
+        background-color: ivory;
+        border-color: #f2f2f5;
+        border-top-width: 1px;
+        border-top-style: solid;
+    }
 
     .commentlist-form {
         background-color: #d9edf7;
-        margin-left: 10px;
         padding: 5px 20px 4px 10px;
         border-color: #9acfea;
         border-top-width: 1px;
         border-top-style: solid;
     }
     .commentlist-body {
-        margin-left: 10px;
         width: 500px;
     }
     #replyComment{
         float: right;
     }
 script.
-    $("#publishEntry").on('click', function () {
-        let body = $("#publishBody").val();
-        if(body === null){
-            return false
-        }
-        $.ajax({
-            url: '/publish',
-            type: 'POST', //GET
-            async: true,    //或false,是否异步
-            data: {
-                body:body
-            },
-            timeout: 5000,    //超时时间
-            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-            success: function (data) {
-                if (data) {
-                    alert('success');
-                    return true
-                } else {
-                    alert('faild');
-                    return false
-                }
-            }
+    function showComment(ele) {
+        let entryId = $(ele).attr("entryId");
+        $.get('/getEntrylist',{entryId:entryId},function (html) {
+            let selector = 'div#' + entryId;
+            let selectorChild = selector+' .commentlist-form';
+            $(selectorChild).remove();
+            $(selector).append(html);
         })
-
-    });
-
+    }

@@ -1,13 +1,14 @@
 extends ../layout
 
 block content
+  script(src="/javascripts/main.js")
   .container
     .row
       .col-md-offset-2
         form.col-md-8.publishForm
           h4 say something~
           textarea#publishBody.form-control
-          button#publishEntry.btn-primary.btn.btn-default 发布
+          a#publishEntry.btn-primary.btn.btn-default(href="javascript:void(0)" onclick="publishEntrys(this)") 发布
   include ../includes/entries
   style.
     #publishEntry{
@@ -27,3 +28,4 @@ block content
       margin: 10px;
 
     }
+

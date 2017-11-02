@@ -5,7 +5,7 @@ let date = new Date();
 let CommentSchema = new mongoose.Schema({
     entry:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'entries'
+        ref:'Entries'
     },
     //评论发起人
     auther:{

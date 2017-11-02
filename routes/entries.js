@@ -14,9 +14,9 @@ exports.publishSubmit = (req,res)=>{
     entries.save((err)=>{
         if(err) {
             console.log(err);
-            return false
+            res.send(err);
         }
-        return true
+        res.send(true);
     });
 
 };
@@ -26,14 +26,8 @@ exports.fetch = (req,res,next)=>{
         .populate('userId','name')
         .exec(function (err,entries) {
             if(err) return next(err);
-            commentModel.findByEntry(entries._id,(err,comments)=>{
-                if (err) return next(err);
-                console.log(comments);
-                res.render('index',{
-                    entries:entries,
-                    comments:comments
-                });
+            res.render('index',{
+                entries:entries,
             });
         });
-
 };

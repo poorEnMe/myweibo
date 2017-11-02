@@ -1,13 +1,12 @@
 const commentModel = require('../models/commentModel');
-
-exports.publishComment = (req)=>{
+exports.getEntryComments = getEntryComments;
+exports.publishComment = (req,res)=>{
     let data = req.body;
     let user = req.user;
     let userId = null;
     if(user){
         userId = user  ;
     }
-    console.log(data.entryId,userId._id,data.body);
     let comment = new commentModel({
         entry:data.entryId,
         auther:userId._id,
@@ -16,10 +15,29 @@ exports.publishComment = (req)=>{
     comment.save((err)=>{
         if(err) {
             console.log(err);
-            return false
+            res.send(err);
         }
-        return true
+        getEntryComments(req,res);
 
     });
 
 };
+
+
+
+
+function getEntryComments(req,res) {
+    let entryId = req.query.entryId;
+    // res.render('../includes/comment.jade')
+    commentModel.find({entry:entryId})
+        .populate(['entry','auther'])
+        .exec(function (err,comments) {
+                if(err) {
+                    console.log(err);
+                }
+                res.render('../includes/commentList.jade',{ commentList: comments }, function(err, html) {
+                    console.log(html);
+                    res.send(html);
+                })
+            });
+}

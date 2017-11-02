@@ -26,7 +26,11 @@ module.exports = (app)=>{
     app.get('/logout',user.logout);
 
     app.post('/publish',entries.publishSubmit);
+
+
+    app.get('/getEntrylist',comment.getEntryComments);
     app.post('/publishComment',comment.publishComment);
+
 
 
     app.get('/list',(req,res)=>{

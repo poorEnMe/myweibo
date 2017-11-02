@@ -1,14 +1,12 @@
-form.col-md-8.comment-form(action='/publishComment' method="post")
+form.col-md-8.comment-form
     .pull-left
         img.comment-head(src="/images/userhead.jpg")
     textarea#commentBody.comment-body(name="body")
-    input#entryId(type="hidden" name="entryId" value="#{entry._id}")
-    button.publishComment.btn-primary.btn.btn-xs(id="#{entry._id}") 评论
+    a.publishComment.btn-primary.btn.btn-xs(entryId="#{entry._id}" href="javascript:void(0)"  onclick="pulishComment(this)") 评论
 
 style.
     .comment-form {
         background-color: #d9edf7;
-        margin-left: 10px;
         padding: 5px 20px 4px 10px;
         border-color: #9acfea;
         border-top-width: 1px;
@@ -17,11 +15,10 @@ style.
 
     .comment-head {
         width: 30px;
-        margin: 0 10px 0 10px;
+        margin: 0 10px 0 0;
     }
 
     .comment-body {
-        margin-left: 10px;
         height: 30px;
         width: 500px;
     }
@@ -33,5 +30,18 @@ style.
         margin-top: 5px;
     }
 
-//script.
-//
+script.
+    function pulishComment(ele) {
+        let entryId = $(ele).attr("entryId");
+        let body = $(ele).prev().val();
+        $.post('/publishComment',{
+            entryId:entryId,
+            body:body
+        },function (html) {
+            let selector = 'div#' + entryId;
+            let selectorChild = selector + ' .commentlist-form';
+            //$(selectorChild).remove();
+            console.log(html);
+            //$(selector).append(html);
+        });
+    }

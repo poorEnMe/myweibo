@@ -1,0 +1,7 @@
+- if (commentList)
+    each comment in commentList
+        form.col-md-8.commentlist-form
+            .pull-left
+                img.comment-head(src="/images/userhead.jpg")
+            span.commentlist-body #{comment.body}
+            button#replyComment.btn.btn-xs 回复

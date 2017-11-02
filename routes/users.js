@@ -29,7 +29,6 @@ exports.registerSubmit = (req,res,next)=>{
 
 exports.loginCheck = (req,res,next)=>{
     let data = req.body;
-    console.log('getCheck');
     User.authenticate(data.username,data.userpassword,function (err,user) {
         if (err) return next(err);
         if(user){
@@ -37,7 +36,6 @@ exports.loginCheck = (req,res,next)=>{
         }else{
             res.send(false);
         }
-        console.log('authResult');
     })
 };
 
@@ -52,7 +50,7 @@ exports.loginSubmit = (req,res,next)=>{
     });
 };
 
-exports.logout = (req,res,next)=>{
+exports.logout = (req,res)=>{
     req.session.destroy(function (err) {
         if(err) throw  err;
         res.redirect('/index');

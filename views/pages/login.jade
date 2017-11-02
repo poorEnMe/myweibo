@@ -41,7 +41,6 @@ block content
                 dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success: function (result, textStatus, jqXHR) {
                     if (result) {
-                        alert("登录成功");
                         ispass=true;
                     } else {
                         alert("登录失败");
@@ -57,16 +56,3 @@ block content
 
         });
 
-
-        //            $.post("/login/check", {
-        //                username: name,
-        //                userpassword: password
-        //            }, function (result) {
-        //                if(result){
-        //                    alert("登录成功");
-        //                    return true;
-        //                }else{
-        //                    alert("登录失败");
-        //                    return false;
-        //                }
-        //            });
