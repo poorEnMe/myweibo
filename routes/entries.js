@@ -1,5 +1,4 @@
 const Entries = require('../models/entries');
-const commentModel = require('../models/commentModel');
 exports.publishSubmit = (req,res)=>{
     let data = req.body;
     let user = req.user;
@@ -22,12 +21,25 @@ exports.publishSubmit = (req,res)=>{
 };
 
 exports.fetch = (req,res,next)=>{
-    Entries.find()
-        .populate('userId','name')
-        .exec(function (err,entries) {
-            if(err) return next(err);
-            res.render('index',{
-                entries:entries,
+    let currentPage = parseInt(req.query.page,10) || 1;
+    let perpage = 1;
+    Entries.count({},function (err,TotalCount) {
+        Entries.find().skip( perpage * (currentPage-1) ).limit(perpage)
+            .populate('userId','name')
+            .exec(function (err,entries) {
+                let pages = {
+                    currentPage:currentPage,
+                    perpage:perpage,
+                    TotalCount:TotalCount,
+                    TotalPages:Math.ceil(TotalCount / perpage)
+                };
+                if(err) return next(err);
+                console.log(pages);
+                res.render('index',{
+                    entries:entries,
+                    pages:pages
+                });
             });
-        });
+    });
+
 };

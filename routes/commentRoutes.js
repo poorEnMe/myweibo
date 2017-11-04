@@ -17,7 +17,16 @@ exports.publishComment = (req,res)=>{
             console.log(err);
             res.send(err);
         }
-        getEntryComments(req,res);
+        commentModel.find({entry:data.entryId})
+            .populate(['entry','auther'])
+            .exec(function (err,comments) {
+                if(err) {
+                    console.log(err);
+                }
+                res.render('../includes/commentList.jade',{ commentList: comments }, function(err, html) {
+                    res.send(html);
+                })
+            });
 
     });
 
@@ -28,7 +37,6 @@ exports.publishComment = (req,res)=>{
 
 function getEntryComments(req,res) {
     let entryId = req.query.entryId;
-    // res.render('../includes/comment.jade')
     commentModel.find({entry:entryId})
         .populate(['entry','auther'])
         .exec(function (err,comments) {
@@ -36,7 +44,6 @@ function getEntryComments(req,res) {
                     console.log(err);
                 }
                 res.render('../includes/commentList.jade',{ commentList: comments }, function(err, html) {
-                    console.log(html);
                     res.send(html);
                 })
             });

@@ -1,47 +1,9 @@
 form.col-md-8.comment-form
     .pull-left
         img.comment-head(src="/images/userhead.jpg")
-    textarea#commentBody.comment-body(name="body")
+    input#commentBody.comment-body
     a.publishComment.btn-primary.btn.btn-xs(entryId="#{entry._id}" href="javascript:void(0)"  onclick="pulishComment(this)") 评论
 
 style.
-    .comment-form {
-        background-color: #d9edf7;
-        padding: 5px 20px 4px 10px;
-        border-color: #9acfea;
-        border-top-width: 1px;
-        border-top-style: solid;
-    }
 
-    .comment-head {
-        width: 30px;
-        margin: 0 10px 0 0;
-    }
 
-    .comment-body {
-        height: 30px;
-        width: 500px;
-    }
-
-    .publishComment {
-        vertical-align: top;
-        float: right;
-
-        margin-top: 5px;
-    }
-
-script.
-    function pulishComment(ele) {
-        let entryId = $(ele).attr("entryId");
-        let body = $(ele).prev().val();
-        $.post('/publishComment',{
-            entryId:entryId,
-            body:body
-        },function (html) {
-            let selector = 'div#' + entryId;
-            let selectorChild = selector + ' .commentlist-form';
-            //$(selectorChild).remove();
-            console.log(html);
-            //$(selector).append(html);
-        });
-    }

@@ -1,7 +1,13 @@
-- if (commentList)
-    each comment in commentList
-        form.col-md-8.commentlist-form
-            .pull-left
-                img.comment-head(src="/images/userhead.jpg")
-            span.commentlist-body #{comment.body}
-            button#replyComment.btn.btn-xs 回复
+each comment in commentList
+    form.col-md-8.commentlist-form
+        .pull-left
+            img.comment-head(src="/images/userhead.jpg")
+        a.user-name(href="/info/") #{comment.auther.name}
+        span 时间
+        div(style="margin-left:40px")
+            p #{comment.body}
+            //
+            //.div-right
+            //    a.btn.btn-xs(href="javascript:void(0)") 回复
+            //div.replydiv 时间
+            //    input.comment-body

@@ -49,6 +49,16 @@ exports.loginSubmit = (req,res,next)=>{
         }
     });
 };
+exports.isLogin = (req,res)=>{
+    if(req.user){
+        res.send(req.user);
+    }else{
+        res.send(false);
+    }
+
+
+};
+
 
 exports.logout = (req,res)=>{
     req.session.destroy(function (err) {

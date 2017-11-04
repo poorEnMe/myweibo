@@ -29,28 +29,16 @@ block content
             let ispass = false
             let name = $("#username").val();
             let password = $("#password").val();
-            $.ajax({
-                url: '/login/check',
-                type: 'POST', //GET
-                async: false,    //或false,是否异步
-                data: {
-                    username: name,
-                    userpassword: password
-                },
-                timeout: 5000,    //超时时间
-                dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-                success: function (result, textStatus, jqXHR) {
-                    if (result) {
-                        ispass=true;
-                    } else {
-                        alert("登录失败");
-                        return false;
-                    }
-                },
-                error: function (xhr, textStatus) {
-                    console.log('错误')
+            $.post( '/logincheck',{
+                username: name,
+                userpassword: password
+                },function (result, textStatus, jqXHR) {
+                if (result) {
+                    ispass=true;
+                } else {
+                    alert("登录失败");
+                    return false;
                 }
-
             })
             return ispass
 

@@ -3,7 +3,7 @@
         .col-md-offset-2
             - if(entries)
                 each entry in entries
-                    div(id="#{entry._id}" style="background-color: ivory;margin-left:10px;")
+                    div(style="background-color: ivory;margin-left:10px;")
                         form.col-md-8.entryForm
                             .pull-left
                                 img.user-head(src="/images/userhead.jpg")
@@ -15,52 +15,35 @@
                                 a(href="javascript:void(0)" entryId="#{entry._id}" onclick="showComment(this)") 评论
                             li
                                 a 点赞
-                        include ../includes/comment
+                        .comment(id="#{entry._id}" style="display:none;" )
+                            include ../includes/comment
+                ul.pagination
+                    - if (pages.TotalPages>1)
+                        li.active
+                            a(pageId="1" onclick="turnPage(this)") 首页
+                        if(pages.currentPage !== 1)
+                            //如果不是首页，先增加一个上一页
+                            li
+                                a(href="javascript:void(0)" pageId="#{pages.currentPage-1}") 上一页
 
+                        - for (let i=pages.currentPage - 2;i<=pages.TotalPages; i ++)
+                            if(i <= pages.TotalPages && i >=1 && (i<=pages.currentPage+2 || i <= 5))
+                                li
+                                    a(href="javascript:void(0)" pageId="#{i}" onclick="turnPage(this)") #{i}
+                        if(pages.currentPage !== pages.TotalPages)
+                            //如果不是末页，先增加一个下一页
+                            li
+                                a(href="javascript:void(0)" pageId="#{pages.currentPage+1}") 下一页
+                        li.active
+                            a(href="javascript:void(0)" pageId="#{currentPage}") 末页
 
-style.
-    p{word-break:break-all;}
-    .entryForm{
-        background-color: ivory;
-        margin-top: 20px;
-        padding: 20px 20px 4px;
-    }
-    .user-head{
-        width: 60px;
-        margin: 0 10px 20px;
-    }
-    .user-name {
-        font-weight: 700;
-        margin-bottom: 10px;
-        vertical-align: top;
-    }
-    .entry-tool{
-        background-color: ivory;
-        border-color: #f2f2f5;
-        border-top-width: 1px;
-        border-top-style: solid;
-    }
-
-    .commentlist-form {
-        background-color: #d9edf7;
-        padding: 5px 20px 4px 10px;
-        border-color: #9acfea;
-        border-top-width: 1px;
-        border-top-style: solid;
-    }
-    .commentlist-body {
-        width: 500px;
-    }
-    #replyComment{
-        float: right;
-    }
 script.
-    function showComment(ele) {
-        let entryId = $(ele).attr("entryId");
-        $.get('/getEntrylist',{entryId:entryId},function (html) {
-            let selector = 'div#' + entryId;
-            let selectorChild = selector+' .commentlist-form';
-            $(selectorChild).remove();
-            $(selector).append(html);
-        })
+    $('.pagination li a').attr({
+        "href":"javascript:void(0)",
+        "onclick":"turnPage(this)"
+    });
+
+    function turnPage(ele) {
+        window.location.href = window.location.pathname+'?page='+$(ele).attr('pageId');
     }
+

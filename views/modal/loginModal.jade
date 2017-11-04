@@ -1,0 +1,43 @@
+#loginModal.modal.fade
+    .modal-dialog(style="width:450px")
+        .modal-content
+            form#loginForm(role="form" action='/login' method='post')
+                .modal-header
+                    h4 登录
+                .modal-body
+                    .form-group
+                        div 还没有账号？
+                            a(href="/register") 注册
+                        input.form-control(type="text" id="username" name="username"
+                        required=true autofocus=true placeholder="请输入账号")
+                        input.form-control(type="password" id="password" name="userpassword" placeholder="密码" required=true)
+                        a.btn.btn-block.btn-success#loginsubmit(onclick="loginSubmit()") 登录
+style.
+    #loginForm {
+        padding: 15px;
+    }
+
+    #loginForm input{
+        margin: 15px 0 15px 0;
+    }
+script.
+    function loginSubmit() {
+        let ispass = false
+        let name = $("#username").val();
+        let password = $("#password").val();
+        $.post( '/login/check',{
+            username: name,
+            userpassword: password
+        },function (result, textStatus, jqXHR) {
+            if (result) {
+                ispass=true;
+                $("#loginForm").submit();
+            } else {
+                alert("登录失败");
+                return false;
+            }
+        })
+
+        return ispass
+
+    };

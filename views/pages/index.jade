@@ -1,7 +1,8 @@
 extends ../layout
 
 block content
-  script(src="/javascripts/main.js")
+  script(src="/javascripts/index.js")
+  link(rel='stylesheet', href='/stylesheets/index.css')
   .container
     .row
       .col-md-offset-2
@@ -10,22 +11,4 @@ block content
           textarea#publishBody.form-control
           a#publishEntry.btn-primary.btn.btn-default(href="javascript:void(0)" onclick="publishEntrys(this)") 发布
   include ../includes/entries
-  style.
-    #publishEntry{
-      margin: 5px;
-      float:right;
-    }
-    #publishBody{
-      width: 620px;
-      height: 125px;
-    }
-    textarea{
-      resize: none;
-    }
-
-    .publishForm {
-      background-color: ivory;
-      margin: 10px;
-
-    }
 

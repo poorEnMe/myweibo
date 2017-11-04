@@ -22,7 +22,7 @@ module.exports = (app)=>{
     });
     app.post('/login/check',user.loginCheck);
     app.post('/login',user.loginSubmit);
-
+    app.get('/isLogin',user.isLogin);
     app.get('/logout',user.logout);
 
     app.post('/publish',entries.publishSubmit);
