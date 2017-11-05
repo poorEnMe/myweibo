@@ -7,7 +7,11 @@ let UserSchema = new mongoose.Schema({
         type:String
     },
     password:String,
-    salt:String
+    salt:String,
+    headImg:{
+        type:String,
+        default:'/images/userhead.jpg'
+    }
 });
 
 UserSchema.pre('save',function(next){

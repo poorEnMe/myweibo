@@ -1,5 +1,7 @@
 const User = require('../models/user');
-
+const fs = require('fs');
+const md5 = require('md5');
+const path = require('path');
 
 exports.isAlreadyUsed = (req,res)=>{
   let name = req.query.username;
@@ -29,6 +31,7 @@ exports.registerSubmit = (req,res,next)=>{
 
 exports.loginCheck = (req,res,next)=>{
     let data = req.body;
+    console.log(data);
     User.authenticate(data.username,data.userpassword,function (err,user) {
         if (err) return next(err);
         if(user){
@@ -67,6 +70,37 @@ exports.logout = (req,res)=>{
     })
 };
 
+exports.headUpload = function (req,res) {
+    let data = req.body;
+    if(data.image){
+        //过滤
+        let base64Data = data.image.replace(/^data:image\/\w+;base64,/, "");
+        let dataBuffer = new Buffer(base64Data, 'base64');
+        //头像存放地址
+        let imgPath = path.resolve('./public/userImg/');
+        //md5名称
+        let md5FileName = md5(dataBuffer);
+        let dataMD5Str = imgPath+ '/' + md5FileName;
+
+        fs.writeFile(dataMD5Str, dataBuffer, function(err) {
+            if(err){
+                console.log(err);
+            }else{
+
+                User.update({_id:req.user._id}, {headImg:"/userImg/" + md5FileName}, {multi: true}, function(err, docs){
+                    if(err) console.log(err);
+                    console.log('更改成功：' + docs);
+                });
+                res.send({
+                    result:"ok",
+                    file:"/userImg/" + md5FileName
+                })
+            }
+        });
+
+
+    }
+};
 
 
 /*

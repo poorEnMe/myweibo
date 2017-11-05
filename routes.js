@@ -1,8 +1,8 @@
 const entries = require('./routes/entries');
 const user = require('./routes/users');
 const comment = require('./routes/commentRoutes');
-
-
+const info = require('./routes/info');
+const isSessionUser = require('./middleware/isSessionUser');
 
 module.exports = (app)=>{
     app.get('/index',entries.fetch);
@@ -34,17 +34,16 @@ module.exports = (app)=>{
 
 
     app.get('/list',(req,res)=>{
-        res.render('list',{
-            title:"列表"
-        });
+        res.render('list',info.fetchByName);
     });
 
-    app.get('/info',(req,res)=>{
-        res.render('info',{
-            title:"个人信息"
+    app.get('/info/:username',info.fetchByName);
+    app.get('/headupload',(req,res)=> {
+        res.render('headUpload', {
+            title: "登录"
         });
     });
-
+    app.post('/headupload',isSessionUser,user.headUpload);
 
 };
 

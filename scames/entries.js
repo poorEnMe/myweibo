@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const users = require('./user');
-// const ObjectId = mongoose.Schema.Types.ObjectId;
+
 
 let date = new Date();
 
@@ -10,18 +10,21 @@ let EntriesSchema = new mongoose.Schema({
         ref:'users'
     },
     body:String,
-    createAt:Date,
-    updateAt:Date
+    createTime:{
+        type:Date,
+        default:Date.now
+    },
+    showTime:String
 });
 
-EntriesSchema.pre('save',(next)=>{
+/*EntriesSchema.pre('save',(next)=>{
     if(this.isNew){
         this.createAt = this.updateAt = date.toUTCString();
     }else{
         this.createAt = date.toUTCString();
     }
     next();
-});
+});*/
 
 EntriesSchema.statics ={
 

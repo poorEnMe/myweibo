@@ -18,9 +18,13 @@ let CommentSchema = new mongoose.Schema({
         ref:'comments'
     },
     body:String,
-    createAt:Date,
-    updateAt:Date
+    createTime:{
+        type:Date,
+        default:Date.now
+    },
+    showTime:String
 });
+/*
 
 CommentSchema.pre('save',(next)=>{
     if(this.isNew){
@@ -30,6 +34,7 @@ CommentSchema.pre('save',(next)=>{
     }
     next();
 });
+*/
 
 CommentSchema.statics ={
 

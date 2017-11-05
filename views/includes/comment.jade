@@ -1,6 +1,7 @@
 form.col-md-8.comment-form
     .pull-left
-        img.comment-head(src="/images/userhead.jpg")
+        a.user-name(href="/info/#{entry.userId.name}")
+            img.comment-head(src="#{entry.userId.headImg}")
     input#commentBody.comment-body
     a.publishComment.btn-primary.btn.btn-xs(entryId="#{entry._id}" href="javascript:void(0)"  onclick="pulishComment(this)") 评论
 

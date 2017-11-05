@@ -1,4 +1,7 @@
 const Entries = require('../models/entries');
+const moment = require('moment');
+moment.locale('zh-cn');
+
 exports.publishSubmit = (req,res)=>{
     let data = req.body;
     let user = req.user;
@@ -22,10 +25,10 @@ exports.publishSubmit = (req,res)=>{
 
 exports.fetch = (req,res,next)=>{
     let currentPage = parseInt(req.query.page,10) || 1;
-    let perpage = 1;
+    let perpage = 5;
     Entries.count({},function (err,TotalCount) {
         Entries.find().skip( perpage * (currentPage-1) ).limit(perpage)
-            .populate('userId','name')
+            .populate({path: 'userId', select: 'name headImg'})
             .exec(function (err,entries) {
                 let pages = {
                     currentPage:currentPage,
@@ -34,7 +37,18 @@ exports.fetch = (req,res,next)=>{
                     TotalPages:Math.ceil(TotalCount / perpage)
                 };
                 if(err) return next(err);
-                console.log(pages);
+                if(entries.length>0){
+                    entries.forEach(function(entry){
+                        let DateNow = new Date();
+                        //超出半天显示绝对时间
+                        if(DateNow - entry['createTime'] <= 60 * 60 * 12){
+                            entry['showTime'] = moment(entry['createTime']).fromNow();
+                        }else{
+                            entry['showTime'] = moment(entry['createTime']).calendar();
+                        }
+
+                    });
+                }
                 res.render('index',{
                     entries:entries,
                     pages:pages

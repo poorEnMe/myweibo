@@ -2,19 +2,18 @@ extends ../layout
 
 block content
     .container
-        form.form-login#loginForm(role="form" action='/login' method='post')
+        form.form-login#loginFormFirst(role="form" action='/login' method='post')
             h2.text-center 登录
-            input.form-control(type="text" id="username" name="username"
+            input.form-control(type="text" id="Loginusername" name="username"
             required=true autofocus=true placeholder="请输入账号")
-            input.form-control(type="password" id="password" name="userpassword" placeholder="密码" required=true)
-            button.btn.btn-primary.btnlg.btn-block#loginsubmit(type="submit") 登录
+            input.form-control(type="password" id="Loginpassword" name="userpassword" placeholder="密码" required=true)
+            a.btn.btn-block.btn-success#loginsubmit(onclick="loginSubmitFirst()") 登录
 
     style.
         .form-login{
             width: 360px;
             padding:15px;
             margin:200px 0px 0px 0px;
-            background-color: #e5e5e5;
         }
         input {
             margin-bottom: 8px;
@@ -25,22 +24,23 @@ block content
         }
     //script(src="/javascripts/register.js")
     script.
-        $("#loginForm").on('submit',function () {
+        function loginSubmitFirst() {
             let ispass = false
-            let name = $("#username").val();
-            let password = $("#password").val();
-            $.post( '/logincheck',{
+            let name = $("#Loginusername").val();
+            let password = $("#Loginpassword").val();
+            $.post('/login/check', {
                 username: name,
                 userpassword: password
-                },function (result, textStatus, jqXHR) {
+            }, function (result, textStatus, jqXHR) {
                 if (result) {
-                    ispass=true;
+                    ispass = true;
+                    $("#loginFormFirst").submit();
                 } else {
                     alert("登录失败");
                     return false;
                 }
             })
+
             return ispass
 
-        });
-
+        };

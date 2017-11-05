@@ -1,0 +1,28 @@
+ul.pagination.col-md-8
+    - if (pages.TotalPages>1)
+    li.active
+        a(pageId="1") 首页
+    if(pages.currentPage !== 1)
+        //如果不是首页，先增加一个上一页
+    li
+        a(pageId="#{pages.currentPage-1}") 上一页
+
+    - for (let i=pages.currentPage - 2;i<=pages.TotalPages; i ++)
+        if(i <= pages.TotalPages && i >=1 && (i<=pages.currentPage+2 || i <= 5))
+            li
+                a(pageId="#{i}") #{i}
+    if(pages.currentPage !== pages.TotalPages)
+            //如果不是末页，先增加一个下一页
+        li
+            a(pageId="#{pages.currentPage+1}") 下一页
+    li.active
+        a(pageId="#{pages.TotalPages}") 末页
+script.
+    $('.pagination li a').attr({
+        "href":"javascript:void(0)",
+        "onclick":"turnPage(this)"
+    });
+
+    function turnPage(ele) {
+        window.location.href = window.location.pathname+'?page='+$(ele).attr('pageId');
+    }

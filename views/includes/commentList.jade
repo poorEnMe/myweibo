@@ -1,9 +1,10 @@
 each comment in commentList
     form.col-md-8.commentlist-form
         .pull-left
-            img.comment-head(src="/images/userhead.jpg")
-        a.user-name(href="/info/") #{comment.auther.name}
-        span 时间
+            a.user-name(href="/info/#{comment.auther.name}")
+                img.comment-head(src="#{comment.auther.headImg}")
+        a.user-name(href="/info/#{comment.auther.name}") #{comment.auther.name}
+        span.TimeText #{comment.showTime}
         div(style="margin-left:40px")
             p #{comment.body}
             //

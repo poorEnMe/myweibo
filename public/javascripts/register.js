@@ -1,54 +1,57 @@
-$("#username").blur(function () {
-    let name = $("#username").val();
-    if(name){
-        if(!nameCheck(name)){
-            //message.text = "用户名必须以字母开头，长度为6-20位（只能包含字母、数字、下划线";
-            $("#message").html("用户名必须以字母开头，长度为6-20位（只能包含字母、数字、下划线")
-                .attr("class","messageDanger");
-            return false
-        }
-        //检测重复
-        $.get("/register/isAlreadyUsed", {username: name}, function (data) {
-            if (data){
-                $("#message").html("该账号已被占用，请更换").attr("class","messageDanger");
+$(document).ready(function () {
+    $("#RegisterUsername").blur(userNameCheck);
+    function userNameCheck() {
+        let name = $("#RegisterUsername").val();
+        if(name){
+            if(!nameCheck(name)){
+                //message.text = "用户名必须以字母开头，长度为6-20位（只能包含字母、数字、下划线";
+                $("#message").html("用户名必须以字母开头，长度为6-20位（只能包含字母、数字、下划线")
+                    .attr("class","messageDanger");
                 return false
             }
-        });
-    }
-
-});
-
-
-$("#password").blur(function () {
-    $("#message").html("请输入账号和密码").attr("class","text-muted");
-    let password = $("#password").val();
-    if(password){
-        //正则匹配
-        if(!passwordCheck(password)){
-            $("#message").html("密码长度为6-20位（只能包含字母、数字、下划线")
-                .attr("class","messageDanger");
-            return false
+            //检测重复
+            $.get("/register/isAlreadyUsed", {username: name}, function (data) {
+                if (data){
+                    $("#message").html("该账号已被占用，请更换").attr("class","messageDanger");
+                    return false
+                }
+            });
         }
-    }
-});
 
-$("#passwordRepeat").blur(function () {
-    $("#message").html("请输入账号和密码").attr("class","text-muted");
-    let passwordRepeat = $("#passwordRepeat").val();
-    let password = $("#password").val();
-    if(passwordRepeat && password){
-        if(password !== passwordRepeat){
-            $("#message").html("两次密码输入不一致")
-                .attr("class","messageDanger");
-            return false
+    }
+
+    $("#Registerpassword").blur(function () {
+        $("#message").html("请输入账号和密码").attr("class","text-muted");
+        let password = $("#Registerpassword").val();
+        if(password){
+            //正则匹配
+            if(!passwordCheck(password)){
+                $("#message").html("密码长度为6-20位（只能包含字母、数字、下划线")
+                    .attr("class","messageDanger");
+                return false
+            }
         }
-    }
+    });
+
+    $("#passwordRepeat").blur(function () {
+        $("#message").html("请输入账号和密码").attr("class","text-muted");
+        let passwordRepeat = $("#passwordRepeat").val();
+        let password = $("#Registerpassword").val();
+        if(passwordRepeat && password){
+            if(password !== passwordRepeat){
+                $("#message").html("两次密码输入不一致")
+                    .attr("class","messageDanger");
+                return false
+            }
+        }
+    });
+
+    $("#registerSubmit").on('click', function() {
+        let isPass = $("#message").attr('class');
+        return isPass !== "messageDanger"
+    });
 });
 
-$("#registerSubmit").on('click', function() {
-    let isPass = $("#message").attr('class');
-    return isPass !== "messageDanger"
-});
 
 
 registerCheck = function () {

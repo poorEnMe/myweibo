@@ -6,9 +6,11 @@
                     div(style="background-color: ivory;margin-left:10px;")
                         form.col-md-8.entryForm
                             .pull-left
-                                img.user-head(src="/images/userhead.jpg")
+                                a.user-name(href="/info/#{entry.userId.name}")
+                                    img.user-head(src="#{entry.userId.headImg}")
                             div(style="margin-left:80px")
-                                a.user-name(href="/info/"  style="white-space:nowrap;") #{entry.userId.name}
+                                a.user-name(href="/info/#{entry.userId.name}"  style="white-space:nowrap;") #{entry.userId.name}
+                                p.TimeText #{entry.showTime}
                                 p #{entry.body}
                         ul.nav.nav-pills.col-md-8.entry-tool
                             li
@@ -17,33 +19,6 @@
                                 a 点赞
                         .comment(id="#{entry._id}" style="display:none;" )
                             include ../includes/comment
-                ul.pagination
-                    - if (pages.TotalPages>1)
-                        li.active
-                            a(pageId="1" onclick="turnPage(this)") 首页
-                        if(pages.currentPage !== 1)
-                            //如果不是首页，先增加一个上一页
-                            li
-                                a(href="javascript:void(0)" pageId="#{pages.currentPage-1}") 上一页
+                include ../includes/Entrypages
 
-                        - for (let i=pages.currentPage - 2;i<=pages.TotalPages; i ++)
-                            if(i <= pages.TotalPages && i >=1 && (i<=pages.currentPage+2 || i <= 5))
-                                li
-                                    a(href="javascript:void(0)" pageId="#{i}" onclick="turnPage(this)") #{i}
-                        if(pages.currentPage !== pages.TotalPages)
-                            //如果不是末页，先增加一个下一页
-                            li
-                                a(href="javascript:void(0)" pageId="#{pages.currentPage+1}") 下一页
-                        li.active
-                            a(href="javascript:void(0)" pageId="#{currentPage}") 末页
-
-script.
-    $('.pagination li a').attr({
-        "href":"javascript:void(0)",
-        "onclick":"turnPage(this)"
-    });
-
-    function turnPage(ele) {
-        window.location.href = window.location.pathname+'?page='+$(ele).attr('pageId');
-    }
 
