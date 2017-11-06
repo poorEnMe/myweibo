@@ -1,0 +1,20 @@
+.container
+    .row
+        .col-md-offset-2
+            - if (messages)
+                each message in messages
+                    div(style="background-color: ivory;margin-left:10px;")
+                        form.entryForm.col-md-8.center-block
+                            .pull-left
+                                a.user-name(href="/info/#{message.author.name}")
+                                    img.user-head(src="#{message.author.headImg}")
+                            div(style="margin-left:80px")
+                                a.user-name(href="/info/#{message.author.name}"  style="white-space:nowrap;") #{message.author.name}
+                                p.TimeText #{message.showTime}
+                                p #{message.body}
+                        ul.nav.nav-pills.col-md-8.entry-tool
+                            li
+                                a(href="javascript:void(0)" entryId="#{message._id}" onclick="showComment(this)") 评论
+                //include ../includes/Entrypages
+            include ../userHead/userHead
+

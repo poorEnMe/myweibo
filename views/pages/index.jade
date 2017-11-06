@@ -10,12 +10,7 @@ block content
           h4 say something~
           textarea#publishBody.form-control
           a#publishEntry.btn-primary.btn.btn-default(href="javascript:void(0)" onclick="publishEntrys(this)") 发布
-        - if(locals.user)
-          .col-md-3
-            .perInfo
-              a
-                img.portHead(src="#{locals.user.headImg}")
-              h3.portName #{locals.user.name}
+        include ../userHead/userHead
   include ../includes/entries
 
 

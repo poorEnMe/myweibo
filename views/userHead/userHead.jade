@@ -1,0 +1,5 @@
+- if(locals.user)
+    .perInfo
+        a(href="/headupload" title="点击更换头像")
+            img.portHead.center-block(src="#{locals.user.headImg}")
+        h3.portName.text-center #{locals.user.name}

@@ -1,40 +1,38 @@
 const mongoose = require('mongoose');
 
-let CommentSchema = new mongoose.Schema({
+let MessageScames = new mongoose.Schema({
+    //围绕的主体
     entry:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Entries'
     },
-    //评论发起人
+    //新动态发起人
     auther:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'users'
     },
     //针对哪条评论，如果为空，则为评论原微博
-    commentTo:{
+    messageTo:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'comments'
+        ref:'users'
     },
+
     body:String,
     createTime:{
         type:Date,
         default:Date.now
     },
-    showTime:String
-});
-/*
-
-CommentSchema.pre('save',(next)=>{
-    if(this.isNew){
-        this.createAt = this.updateAt = date.toUTCString();
-    }else{
-        this.createAt = date.toUTCString();
+    showTime:String,
+    //type:1 代表评论
+    type:Number,
+    hasRead:{
+        type:Boolean,
+        default:false
     }
-    next();
 });
-*/
 
-CommentSchema.statics ={
+
+MessageScames.statics ={
 
     findById:function(id){
         return this.findOne({_id:id});
@@ -47,4 +45,4 @@ CommentSchema.statics ={
     }
 };
 
-module.exports = CommentSchema;
+module.exports = MessageScames;

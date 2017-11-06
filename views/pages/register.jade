@@ -9,7 +9,7 @@ block content
           p#message.text-muted 请输入账号和密码
           input#RegisterUsername.form-control(type="text"  name="username"
                             required=true autofocus=true placeholder="请输入账号")
-          input#Registerpassword.form-control(type="password"  name="userpassword" placeholder="密码，不得低于8位数" required=true)
+          input#Registerpassword.form-control(type="password"  name="userpassword" placeholder="密码，不得低于6位数" required=true)
           input.form-control(type="password" id="passwordRepeat"  placeholder="确认密码" required=true)
           button.btn.btn-primary.btnlg.btn-block#registerSubmit(type="submit" onclick="registerCheck()") 注册
 

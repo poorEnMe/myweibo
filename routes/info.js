@@ -13,6 +13,7 @@ exports.fetchByName = (req,res,next)=>{
         }else{
             Entries.count({userId:user._id},function (err,TotalCount) {
                 Entries.find({userId:user._id}).skip( perpage * (currentPage-1) ).limit(perpage)
+                    .sort({'createTime':-1})
                     .populate('userId','name headImg')
                     .exec(function (err,entries) {
                         let pages = {
@@ -26,7 +27,7 @@ exports.fetchByName = (req,res,next)=>{
                             entries.forEach(function(entry){
                                 let DateNow = new Date();
                                 //超出半天显示绝对时间
-                                if(DateNow - entry['createTime'] <= 60 * 60 * 12){
+                                if(DateNow - entry['createTime'] <= 1000 * 60 * 60 * 12){
                                     entry['showTime'] = moment(entry['createTime']).fromNow();
                                 }else{
                                     entry['showTime'] = moment(entry['createTime']).calendar();
@@ -35,6 +36,7 @@ exports.fetchByName = (req,res,next)=>{
                             });
                         }
                         res.render('info',{
+                            userInfo:user,
                             entries:entries,
                             pages:pages
                         });

@@ -4,7 +4,7 @@
             - if(entries)
                 each entry in entries
                     div(style="background-color: ivory;margin-left:10px;")
-                        form.col-md-8.entryForm
+                        form.entryForm.col-md-8.center-block
                             .pull-left
                                 a.user-name(href="/info/#{entry.userId.name}")
                                     img.user-head(src="#{entry.userId.headImg}")
@@ -20,5 +20,5 @@
                         .comment(id="#{entry._id}" style="display:none;" )
                             include ../includes/comment
                 include ../includes/Entrypages
-
+            include ../userHead/infoHead
 

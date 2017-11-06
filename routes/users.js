@@ -31,7 +31,6 @@ exports.registerSubmit = (req,res,next)=>{
 
 exports.loginCheck = (req,res,next)=>{
     let data = req.body;
-    console.log(data);
     User.authenticate(data.username,data.userpassword,function (err,user) {
         if (err) return next(err);
         if(user){
