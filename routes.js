@@ -3,6 +3,7 @@ const user = require('./routes/users');
 const comment = require('./routes/commentRoutes');
 const info = require('./routes/info');
 const isSessionUser = require('./middleware/isSessionUser');
+const list = require('./routes/list');
 
 module.exports = (app)=>{
     app.get('/index',entries.fetch);
@@ -33,9 +34,7 @@ module.exports = (app)=>{
 
 
 
-    app.get('/list',(req,res)=>{
-        res.render('list',info.fetchByName);
-    });
+    app.get('/list',list.showList);
 
     app.get('/info/:username',info.fetchByName);
     app.get('/headupload',(req,res)=> {
@@ -44,6 +43,11 @@ module.exports = (app)=>{
         });
     });
     app.post('/headupload',isSessionUser,user.headUpload);
+
+
+    app.get('/ball',function (req,res) {
+        res.render('../sthIntersting/MoveBall');
+    })
 
 };
 

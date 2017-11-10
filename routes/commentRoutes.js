@@ -92,7 +92,7 @@ function updateShowDate(comments) {
         if(DateNow - comment['createTime'] <= 1000 * 60 * 60 * 12){
             comment['showTime'] = moment(comment['createTime']).fromNow();
         }else{
-            comment['showTime'] = moment(comment['createTime']).calendar();
+            comment['showTime'] = moment(comment['createTime']).format("YYYY-MM-DD HH:mm");
         }
     });
     return comments;

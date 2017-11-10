@@ -2,6 +2,7 @@ const messageModel = require('../models/messageModel');
 const moment = require('moment');
 moment.locale('zh-cn');
 
+
 //exports.getmessage = getmessage;
 
 //动态只能由评论触发

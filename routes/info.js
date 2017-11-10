@@ -30,7 +30,7 @@ exports.fetchByName = (req,res,next)=>{
                                 if(DateNow - entry['createTime'] <= 1000 * 60 * 60 * 12){
                                     entry['showTime'] = moment(entry['createTime']).fromNow();
                                 }else{
-                                    entry['showTime'] = moment(entry['createTime']).calendar();
+                                    entry['showTime'] = moment(entry['createTime']).format("YYYY-MM-DD HH:mm");
                                 }
 
                             });

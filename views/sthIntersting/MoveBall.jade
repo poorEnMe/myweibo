@@ -1,0 +1,76 @@
+extends ../layout
+
+block content
+    canvas#canvas
+
+    style.
+        #canvas{
+            margin-left: auto;
+            margin-right: auto;
+        }
+    script(src="/javascripts/underscore-min.js")
+    script.
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+
+        canvas.width = screen.width;
+        canvas.height = screen.height;
+        canvas.style.backgroundColor = '#000';
+
+        class Ball{
+            constructor(x,y,color){
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.r = 50;
+            }
+            render(){
+                ctx.save();
+
+                ctx.beginPath();
+                ctx.arc(this.x,this.y,this.r,0,Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+        }
+
+        class MoveBall extends Ball{
+            constructor(x,y,color){
+                super(x,y,color);
+                this.dX = _.random(-5,5);
+                this.dY = _.random(-5,5);
+                this.dR = _.random(1,3);
+            }
+            upDate(){
+                this.x += this.dX;
+                this.y += this.dY;
+                this.r -= this.dR;
+
+                if(this.r < 0){
+                    this.r =0
+                }
+            }
+        }
+
+        let ballArray = [];
+
+        canvas.addEventListener('mousemove',function (e) {
+            let ball = new MoveBall(e.offsetX,e.offsetY,getRandColor());
+            ballArray.push(ball);
+        })
+
+        function getRandColor() {
+            return '#' + Math.floor(Math.random() * 256).toString(10);
+        }
+
+        setInterval(function () {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            ballArray.slice(-1000).forEach(function (ball) {
+                ball.render();
+                ball.upDate();
+            })
+        },100)

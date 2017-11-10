@@ -1,5 +1,55 @@
 extends ../layout
 
 block content
-    h1= title
-    p Welcome to #{title}
+    div#list
+        table
+            thead
+                tr
+                    td user
+                    td userName
+                    td body
+                    td createTime
+                    td DELETE
+            tbody
+                each entry in entries
+                    tr
+                        td
+                            img.listHead(src='#{entry.userId.headImg}')
+                        td #{entry.userId.name}
+                        td #{entry.body}
+                        td #{entry.showTime}
+                        td
+                            button.btn.btn-xs.btn-warning(onclick="") Delete
+
+    style.
+        table{
+            border: 2px solid orangered;
+            text-align: center;
+            width: 800px;
+            margin:100px auto;
+        }
+        thead{
+            background-color: orangered;
+            opacity: 0.8;
+            color: #0a628f;
+        }
+        thead td{
+            color: rgba(253,242,228,0.91)
+        }
+        tr{
+            border-collapse:separate;
+            border-spacing:5px 10px;
+        }
+        td{
+            font-size: large;
+            border: 1px dashed orange;
+
+        }
+        .listHead{
+            width: 30px;
+            margin: 0 10px 0 0;
+        }
+    script.
+        function () {
+            
+        }
