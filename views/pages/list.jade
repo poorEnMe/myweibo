@@ -19,7 +19,7 @@ block content
                         td #{entry.body}
                         td #{entry.showTime}
                         td
-                            button.btn.btn-xs.btn-warning(onclick="") Delete
+                            button.btn.btn-xs.btn-warning(entryId="#{entry._id}" onclick="deleteEntry(this)") Delete
 
     style.
         table{
@@ -50,6 +50,10 @@ block content
             margin: 0 10px 0 0;
         }
     script.
-        function () {
-            
+        function deleteEntry(ele) {
+            let entryId = $(ele).attr('entryId');
+            console.log(entryId);
+            $.get('/deleteEntryId',{entryId:entryId},function (result) {
+                console.log(result);
+            });
         }

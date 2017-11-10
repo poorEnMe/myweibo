@@ -21,7 +21,6 @@ exports.showList = (req,res,next)=>{
                         entry['showTime'] = moment(entry['createTime']).format("YYYY-MM-DD HH:mm");
                     });
                 }
-                console.log(entries);
                 res.render('list',{
                     entries:entries,
                     pages:pages

@@ -58,3 +58,16 @@ exports.fetch = (req,res,next)=>{
     });
 
 };
+
+exports.deleteEntry = (req,res)=>{
+    let data = req.query;
+    if(data.entryId){
+        Entries.remove({_id:data.entryId},function(err,result){
+            if(err){
+                console.log(err);
+            }else{
+                console.log("delete");
+            }
+        });
+    }
+};

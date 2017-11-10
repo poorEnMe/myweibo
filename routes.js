@@ -27,9 +27,9 @@ module.exports = (app)=>{
     app.get('/logout',user.logout);
 
     app.post('/publish',entries.publishSubmit);
-
-
     app.get('/getEntrylist',comment.getEntryComments);
+    app.get('/deleteEntryId',entries.deleteEntry);
+
     app.post('/publishComment',comment.publishComment);
 
 
