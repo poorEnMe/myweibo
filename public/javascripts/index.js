@@ -13,6 +13,8 @@ function publishEntrys() {
             if (result) {
                 $("#publishBody").val('');
                 window.location.reload();
+                const socket=io.connect('localhost:3000');
+                socket.emit('newEntry','123');
 
             } else {
                 alert('faild');

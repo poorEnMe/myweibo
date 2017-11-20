@@ -7,6 +7,7 @@
 const app = require('../app');
 const debug = require('debug')('myweibo:server');
 const http = require('http');
+const io = require('../socket/newNotice');
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +21,7 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+io(server);
 
 /**
  * Listen on provided port, on all network interfaces.

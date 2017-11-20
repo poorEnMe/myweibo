@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 
 const sessionUser = require('./middleware/sessionUser');
-
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/myweibo',{
     useMongoClient: true
 });

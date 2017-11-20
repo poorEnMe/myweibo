@@ -1,6 +1,8 @@
+
 .container
     .row
         .col-md-offset-2
+            a#btn_refresh(href="/index" style='display:none' ) 刷新
             - if(entries)
                 each entry in entries
                     div(style="background-color: ivory;margin-left:10px;")
@@ -21,4 +23,23 @@
                             include ../includes/comment
                 include ../includes/Entrypages
             include ../userHead/infoHead
+script.
+    const socket=io.connect('localhost:3000');
+    let newEntryCount =0;
+    //接收来自服务端的信息事件c_hi
+    socket.on('aNewEntry',function(newCount){
+        newEntryCount += newCount;
+        console.log(newEntryCount);
+        if(newEntryCount > 0 ){
+            const btnRefresh = document.getElementById('btn_refresh')
+            btnRefresh.innerHTML=`有${newEntryCount}条新微博，点击刷新`;
+            btnRefresh.style.display="";
+            btnRefresh.setAttribute('class','btnRefresh');
+        }
+    })
+style.
+    .btnRefresh{
+        display: block;
+        background-color: rgba(253,251,125,0.56);
 
+    }
