@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost/myweibo',{
 
 //路由
 const routes = require('./routes.js');
-
+console.log('hello');
 const app = express();
 
 // view engine setup
