@@ -4,6 +4,7 @@ const comment = require('./routes/commentRoutes');
 const info = require('./routes/info');
 const isSessionUser = require('./middleware/isSessionUser');
 const list = require('./routes/list');
+const alipay = require('./routes/alipay');
 
 module.exports = (app)=>{
     app.get('/index',entries.fetch);
@@ -49,5 +50,6 @@ module.exports = (app)=>{
         res.render('../sthIntersting/MoveBall');
     })
 
+    app.get('/callback',)
 };
 
