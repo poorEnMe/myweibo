@@ -50,6 +50,6 @@ module.exports = (app)=>{
         res.render('../sthIntersting/MoveBall');
     })
 
-    app.get('/callback',)
+    app.get('/callback',alipay.getNotice)
 };
 
